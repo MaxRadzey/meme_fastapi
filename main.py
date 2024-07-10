@@ -1,15 +1,9 @@
 from fastapi import FastAPI
-# from fastapi.concurrency import asynccontextmanager
-# from pydantic import BaseModel, EmailStr, HttpUrl, constr, field_validator
+import uvicorn
 
 from services.memes.router import router as memes_router
-# from services.memes.database import create_tables
+from services.users.router import router as user_router
 
-
-# @asynccontextmanager
-# async def lifespan(app: FastAPI):
-#     await create_tables()
-#     yield
 
 app = FastAPI(
     title='Memes API',
@@ -17,6 +11,9 @@ app = FastAPI(
     )
 
 app.include_router(memes_router)
+app.include_router(user_router)
 
+if __name__ == '__main__':
+    uvicorn.run('main:app', reload=True)
 
 # uvicorn main:app --reload
